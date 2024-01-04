@@ -21,11 +21,11 @@ public class PracticeFormTest {
     private final String month = "September";
     private final String year = "1968";
     private final String hobby = "Reading";
+    private final String day = "5";
+    private final String subject = "Math";
     private final String filename = "kitty-cat.jpeg";
-    private String day = "";
-    private String subject = "";
-    private String state = "";
-    private String city = "";
+    private final String state = "Haryana";
+    private final String city = "Panipat";
 
     @BeforeAll
     static void beforeAll() {
@@ -60,19 +60,19 @@ public class PracticeFormTest {
         $(byId("dateOfBirthInput")).click();
         $(".react-datepicker__month-select").selectOption(month);
         $(".react-datepicker__year-select").selectOption(year);
-        SelenideElement dayElement = $(".react-datepicker__day--005");
-        if(dayElement.exists()) {
-            day = dayElement.getText();
-            dayElement.click();
+
+        SelenideElement dayElement = null;
+        if(Integer.parseInt(day) <= 9) {
+            dayElement = $(".react-datepicker__day--00" + day);
+        } else {
+            dayElement = $(".react-datepicker__day--0" + day);
         }
 
+        if(dayElement.exists())
+            dayElement.click();
+
         //fill autocomplete control
-        $(byId("subjectsInput")).setValue("a");
-        ElementsCollection subjectVariants = $$(".subjects-auto-complete__menu div");
-        if(!subjectVariants.isEmpty()) {
-            subject = subjectVariants.last().getText();
-            subjectVariants.last().click();
-        }
+        $(byId("subjectsInput")).setValue(subject).pressEnter();
 
         //choose checkbox
         $$("#hobbiesWrapper div.custom-control label.custom-control-label")
@@ -80,25 +80,19 @@ public class PracticeFormTest {
                 .click();
 
         //choose picture
-        $(byId("uploadPicture")).uploadFromClasspath("kitty-cat.jpeg");
+        $(byId("uploadPicture")).uploadFromClasspath(filename);
 
         //choose state dropdown
         $("#stateCity-wrapper #state .css-yk16xz-control").click();
-        ElementsCollection stateVariants = $$(".css-26l3qy-menu div");
-        if(!stateVariants.isEmpty()) {
-            state = stateVariants.last().getText();
-            stateVariants.last().click();
-        }
+        $(byId("react-select-3-input")).setValue(state).pressEnter();
+
+
 
         //choose city dropdown
         SelenideElement cityControl = $("#stateCity-wrapper #city .css-yk16xz-control");
         if(cityControl.find("input").isEnabled()) {
             cityControl.click();
-            ElementsCollection cityVariants = $$(".css-26l3qy-menu div");
-            if(!cityVariants.isEmpty()) {
-                city = cityVariants.last().getText();
-                cityVariants.last().click();
-            }
+            $(byId("react-select-4-input")).setValue(city).pressEnter();
         }
 
         $(byId("submit")).click();

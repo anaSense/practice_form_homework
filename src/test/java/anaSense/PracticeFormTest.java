@@ -80,7 +80,7 @@ public class PracticeFormTest {
                 .click();
 
         //choose picture
-        $(byId("uploadPicture")).uploadFile(new File("src/test/resources/" + filename));
+        $(byId("uploadPicture")).uploadFromClasspath("kitty-cat.jpeg");
 
         //choose state dropdown
         $("#stateCity-wrapper #state .css-yk16xz-control").click();

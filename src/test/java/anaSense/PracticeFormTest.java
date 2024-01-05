@@ -4,8 +4,6 @@ import com.codeborne.selenide.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -32,7 +30,6 @@ public class PracticeFormTest {
         Configuration.browserSize = "1920x1080";
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.pageLoadStrategy = "eager";
-        Configuration.holdBrowserOpen = true;
         Configuration.timeout = 5000;
     }
 
@@ -84,7 +81,7 @@ public class PracticeFormTest {
         //choose city dropdown
         $("#stateCity-wrapper #city .css-yk16xz-control").click();
         $(byId("react-select-4-input")).setValue(city).pressEnter();
-        
+
         $(byId("submit")).click();
 
         //check data

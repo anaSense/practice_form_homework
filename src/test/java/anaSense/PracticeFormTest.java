@@ -60,16 +60,11 @@ public class PracticeFormTest {
         $(byId("dateOfBirthInput")).click();
         $(".react-datepicker__month-select").selectOption(month);
         $(".react-datepicker__year-select").selectOption(year);
-
-        SelenideElement dayElement = null;
         if(Integer.parseInt(day) <= 9) {
-            dayElement = $(".react-datepicker__day--00" + day);
+            $(".react-datepicker__day--00" + day).click();
         } else {
-            dayElement = $(".react-datepicker__day--0" + day);
+            $(".react-datepicker__day--0" + day).click();
         }
-
-        if(dayElement.exists())
-            dayElement.click();
 
         //fill autocomplete control
         $(byId("subjectsInput")).setValue(subject).pressEnter();
@@ -86,29 +81,22 @@ public class PracticeFormTest {
         $("#stateCity-wrapper #state .css-yk16xz-control").click();
         $(byId("react-select-3-input")).setValue(state).pressEnter();
 
-
-
         //choose city dropdown
-        SelenideElement cityControl = $("#stateCity-wrapper #city .css-yk16xz-control");
-        if(cityControl.find("input").isEnabled()) {
-            cityControl.click();
-            $(byId("react-select-4-input")).setValue(city).pressEnter();
-        }
-
+        $("#stateCity-wrapper #city .css-yk16xz-control").click();
+        $(byId("react-select-4-input")).setValue(city).pressEnter();
+        
         $(byId("submit")).click();
 
         //check data
-        if($(".modal-dialog").isDisplayed()) {
-            $(".table").shouldHave(text(firstName + " " + lastName));
-            $(".table").shouldHave(text(email));
-            $(".table").shouldHave(text(gender));
-            $(".table").shouldHave(text(phoneNumber));
-            $(".table").shouldHave(text(day + " " + month + "," + year));
-            $(".table").shouldHave(text(subject));
-            $(".table").shouldHave(text(hobby));
-            $(".table").shouldHave(text(filename));
-            $(".table").shouldHave(text(address));
-            $(".table").shouldHave(text(state + " " + city));
-        }
+        $(".table").shouldHave(text(firstName + " " + lastName));
+        $(".table").shouldHave(text(email));
+        $(".table").shouldHave(text(gender));
+        $(".table").shouldHave(text(phoneNumber));
+        $(".table").shouldHave(text(day + " " + month + "," + year));
+        $(".table").shouldHave(text(subject));
+        $(".table").shouldHave(text(hobby));
+        $(".table").shouldHave(text(filename));
+        $(".table").shouldHave(text(address));
+        $(".table").shouldHave(text(state + " " + city));
     }
 }
